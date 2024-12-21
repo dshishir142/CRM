@@ -1,0 +1,126 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum RoleName{
+  AGENT
+  ADMIN
+}
+
+enum Status{
+  PENDING
+  COMPLETED
+}
+
+model Role{
+  id Int @id @default(autoincrement())
+  name RoleName @unique
+  users user[]
+}
+
+model user{
+  user_id Int @id @default(autoincrement())
+  name String 
+  email String @unique
+  password String 
+  role Role @relation(fields: [role_id] , references: [id])
+  role_id Int
+  created_at DateTime @default(now())
+  clients client[]
+  products product[]
+  interactions interaction[]
+  emails email[]
+  tasks task[]
+}
+
+model client{
+  client_id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  phone String
+  address String
+  interest_score Int?
+  agent user @relation(fields: [user_id], references: [user_id])
+  user_id Int
+  created_at DateTime @default(now())
+  interactions interaction[]
+  histories history[]
+  emails email[]
+  tasks task[]
+  products client_product[]
+}
+
+model product{
+  product_id Int @id @default(autoincrement())
+  name String
+  description String
+  price Decimal @db.Decimal(10,2)
+  status String
+  admin user @relation(fields: [admin_id], references: [user_id])
+  admin_id Int
+  created_at DateTime @default(now())
+  clients client_product[]
+}
+
+model interaction{
+  interaction_id Int @id
+  client client @relation(fields: [client_id], references: [client_id])
+  client_id Int
+  agent user @relation(fields: [agent_id], references: [user_id])
+  agent_id Int
+  created_at DateTime @default(now())
+}
+
+model history{
+  history_id Int @id @default(autoincrement())
+  client client @relation(fields: [client_id], references: [client_id])
+  client_id Int
+  score Int
+  reason String
+  created_at DateTime @default(now())
+}
+
+model email{
+  email_id Int @id @default(autoincrement())
+  client client @relation(fields: [client_id], references: [client_id])
+  client_id Int
+  agent user @relation(fields: [user_id], references: [user_id])
+  user_id Int
+  subject String
+  body String
+  status String
+  created_at DateTime @default(now())
+}
+
+model task{
+  task_id Int @id @default(autoincrement())
+  client client @relation(fields: [client_id], references: [client_id])
+  client_id Int
+  agent user @relation(fields: [user_id], references: [user_id])
+  user_id Int
+  description String
+  status Status
+  due_date DateTime?
+  created_at DateTime @default(now())
+}
+
+model client_product{
+  client_product_id Int @id
+  client client @relation(fields: [client_id], references: [client_id])
+  client_id Int
+  product product @relation(fields: [product_id], references: [product_id])
+  product_id Int
+  interest Int
+  created_at DateTime @default(now())
+}
