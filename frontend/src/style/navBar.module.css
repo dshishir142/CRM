@@ -1,0 +1,52 @@
+.navbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 700px;
+    background-color: #333;
+    padding-top: 20px;
+  }
+  
+  .navList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  .navItem {
+    display: block;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background 0.3s;
+  }
+  
+  .navItem:hover {
+    background-color: #555;
+  }
+
+  .homeIcon{
+    height: 18px;
+    display: inline;
+    margin-right: 10px;
+  }
+  
+  .clientIcon{
+    height: 22px;
+    display: inline;
+    margin-right: 10px;
+    transform: translateY(5px);
+  }
+
+  .profileIcon{
+    height: 20px;
+    display: inline;
+    margin-right: 10px;
+
+  }
+  

@@ -1,0 +1,20 @@
+.profileContainer {
+    height:500px;
+    width: 1200px;
+    top: 180px;
+    margin-left: 200px;
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.1); 
+    z-index: 0;
+}
+
+.profilePic{
+    height: 200px;
+    width: 200px;
+    border: 4px solid rgb(186, 186, 186);
+    border-radius: 50%;
+    margin-left: 270px;
+    position: fixed;
+    z-index: 1;
+    top: 50px;
+}

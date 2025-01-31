@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import styles from "./userSignin.module.css";
+import styles from "../style/userSignin.module.css";
+import { useNavigate } from "react-router-dom";
+import setUserInLocalStorage from "./localStorageUtils.js"
 
 function UserSignin() {
   const [formData, setFormData] = useState({
@@ -8,6 +10,8 @@ function UserSignin() {
     password: "",
     confirmPassword: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +27,7 @@ function UserSignin() {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/user", {
+      const response = await fetch("http://localhost:8000/user/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +44,13 @@ function UserSignin() {
       }
 
       const data = await response.json();
-      alert("Sign-in successful! Response received: " + JSON.stringify(data));
+      alert(data.message);
+
+      setUserInLocalStorage.setUserInLocalStorage(data.data.user_id);
+
+      navigate("/");
+
+
     } catch (error) {
       alert("Failed to sign in: " + error.message);
     }
@@ -48,7 +58,7 @@ function UserSignin() {
 
   return (
     <div className={styles.container}>
-      <h2>Sign In</h2>
+      <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
           <label htmlFor="name">Name</label>
@@ -95,7 +105,7 @@ function UserSignin() {
           />
         </div>
         <button className={styles.submitButton} type="submit">
-          Sign In
+          Sign Up
         </button>
       </form>
     </div>

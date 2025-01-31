@@ -36,6 +36,7 @@ model user{
   password String 
   role Role @relation(fields: [role_id] , references: [id])
   role_id Int
+  image String? @default("default.jpg")
   created_at DateTime @default(now())
   clients client[]
   products product[]
