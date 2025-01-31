@@ -46,7 +46,7 @@ function UserSignin() {
       const data = await response.json();
       alert(data.message);
 
-      setUserInLocalStorage.setUserInLocalStorage(data.data.user_id);
+      setUserInLocalStorage.setUserInLocalStorage(data.data.email);
 
       navigate("/");
 

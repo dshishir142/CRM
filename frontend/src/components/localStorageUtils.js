@@ -1,7 +1,6 @@
-exports.setUserInLocalStorage = async (userId) => {
+exports.setUserInLocalStorage = async (userEmail) => {
     try{
-
-        const response = await fetch(`http://localhost:8000/user/${userId}`);
+        const response = await fetch(`http://localhost:8000/user/${userEmail}`);
         if(!response){
             throw new Error('Failed to fetch data');
         }

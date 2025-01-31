@@ -2,52 +2,53 @@ const { PrismaClient } = require('@prisma/client');
 const { use } = require('../routes/userRoute');
 const prisma = new PrismaClient;
 
-exports.createUser = async (req,res) => {
-    try{
+exports.createUser = async (req, res) => {
+    try {
         const { email } = req.body;
 
         const existingUser = await prisma.user.findUnique({
-            where : { email },
+            where: { email },
         })
 
-        if(existingUser){
+        if (existingUser) {
             return res.status(400).json({
-                status : "error",
-                message : "User already in use",
+                status: "error",
+                message: "User already in use",
             })
         }
 
         const dataInDb = await prisma.user.create({
-           data : {...req.body, role_id: 1},
+            data: { ...req.body, role_id: 1 },
         })
 
-        if(dataInDb){
+        if (dataInDb) {
             res.status(201).json({
-                status : "Success",
-                message : "User created successfully",
+                status: "Success",
+                message: "User created successfully",
                 data: dataInDb,
             })
         }
 
-    }catch(e){
+    } catch (e) {
 
         res.status(500).json({
-            status : "error",
-            message : "Something went wrong",
+            status: "error",
+            message: "Something went wrong",
         })
     }
 }
 
 
-exports.getUserById = async (req, res) => {
-    try{
-        const userId = parseInt(req.params.id);
+exports.getUserByEmail = async (req, res) => {
+    try {
+
+        const email = req.params.email;
         const user = await prisma.user.findUnique({
-            where : {user_id: userId},
+            where: { email: email },
         })
 
 
-        if(!user){
+        if (!user) {
             return res.status(404).json({
                 status: "error",
                 message: "User not found",
@@ -58,7 +59,45 @@ exports.getUserById = async (req, res) => {
             status: "Success",
             data: user,
         })
-    }catch(e){
-        res.send("Something went wrong");
+    } catch (e) {
+        res.status(500).json({
+            status: "error",
+            message: "Something went wrong",
+        })
+    }
+}
+
+
+exports.getUserForLogin = async (req, res) => {
+
+    try {
+
+        const { name, email, password } = req.body;
+        const userData = await prisma.user.findFirst({
+            where: {
+                name: name,
+                email: email,
+                password: password,
+            }
+        })
+
+        if (!userData) {
+            return res.status(400).json({
+                status: "error",
+                message: "Wrong credentials please try again",
+            })
+        }
+
+        res.status(200).json({
+            status: "success",
+            message: "login successful",
+            data: userData,
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            status: "error",
+            message: "Something went wrong",
+        })
     }
 }
