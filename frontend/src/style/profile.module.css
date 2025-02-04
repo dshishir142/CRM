@@ -8,6 +8,11 @@
     z-index: 0;
 }
 
+.profileContainer h3{
+    color: rgb(202, 202, 202);
+    margin-left: 80px;
+}
+
 .profilePic{
     height: 200px;
     width: 200px;
@@ -30,11 +35,11 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-top: 20px;
-    display: block;
+    display: inline;
     width: auto;
     text-align: center;
     position: relative;
-    top: 300px;
+    top: 200px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -87,4 +92,33 @@
     font-weight: bold;
     color: #ff4d4d; 
     margin-bottom: 15px;
+}
+
+.editButton {
+    background-color: #3400cf;
+    text-decoration: none;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    display: inline;
+    width: auto;
+    text-align: center;
+    position: relative;
+    top: 200px;
+    left: 500px;
+    transform: translateX(-50%);
+}
+
+.editButton:hover {
+    background-color: #4100cc;
+}
+
+.editButton:active {
+    background-color: #400099; 
 }

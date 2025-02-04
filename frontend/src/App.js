@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from "react-route
 import { AnimatePresence, motion } from 'framer-motion';
 import NavBar from './components/dashboardComponents/navBar';
 import UserSignin from './components/userSignin';
+import EditUser from './components/editUser';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -23,6 +24,7 @@ function AnimatedRoutes() {
         <Route path="/profile" element={<PageWrapper><Profile /></PageWrapper>} />
         <Route path="/userlogin" element={<PageWrapper><UserLogin /></PageWrapper>} />
         <Route path="/usersignin" element={<PageWrapper><UserSignin /></PageWrapper>} />
+        <Route path="/edituser" element={<PageWrapper><EditUser /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );
@@ -30,7 +32,7 @@ function AnimatedRoutes() {
 
 function App() {
   const location = useLocation();
-  const hideNavOnRoutes = ["/userlogin", "/usersignin"]; 
+  const hideNavOnRoutes = ["/userlogin", "/usersignin", "/edituser"]; 
 
   return (
     <>

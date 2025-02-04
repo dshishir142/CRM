@@ -18,7 +18,7 @@ exports.createUser = async (req, res) => {
         }
 
         const dataInDb = await prisma.user.create({
-            data: { ...req.body, role_id: 1 },
+            data: { ...req.body, role_id: 1},
         })
 
         if (dataInDb) {

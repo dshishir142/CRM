@@ -7,9 +7,9 @@ exports.setUserInLocalStorage = async (userEmail) => {
 
         const data = await response.json();
 
-        const { user_id, name, email, image } = data.data;
+        const { user_id, name, email, image, role_id } = data.data;
 
-        localStorage.setItem("user", JSON.stringify({ user_id, name, email, image}));
+        localStorage.setItem("user", JSON.stringify({ user_id, name, email, image, role_id}));
     }catch(error){
         console.log("Error in setting up localstorage: ", error);
     }
