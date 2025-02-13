@@ -113,3 +113,14 @@ input[type="file"] {
 .changePasswordButton:hover {
     background-color: #218838;
 }
+.errorMessage {
+    color: #ff4d4d;
+    background: #330000;
+    padding: 8px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: bold;
+    border: 1px solid #ff4d4d;
+}

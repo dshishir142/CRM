@@ -1,22 +1,44 @@
-import React, { useState} from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../style/userSignin.module.css";
 import { useNavigate } from "react-router-dom";
+import { getUserInLocalStorage, setUserInLocalStorage } from "./localStorageUtils";
+import axios from 'axios';
 
 function EditUser() {
     const navigate = useNavigate();
 
-    const [ preview, setPreview ] = useState();
-    
-    const user = JSON.parse(localStorage.getItem("user"));
+    const [preview, setPreview] = useState();
+    const [image, setImage] = useState();
+    const [error, setError] = useState();
+
+    const localData = JSON.parse(localStorage.getItem("user"));
 
     const [showPasswordFields, setShowPasswordFields] = useState(false);
     const [formData, setFormData] = useState({
-        name: user.name,
-        email: user.email,
-        image: user.image,
-        password: user.password,
-        confirmPassword: user.password,
+        name: "",
+        email: localData.email,
+        image: "",
+        password: "",
+        confirmPassword: "",
     });
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const user = await getUserInLocalStorage(localData.email);
+                setFormData({
+                    name: user.name || "",
+                    email: user.email || "",
+                    password: user.password || "",
+                    confirmPassword: user.password || "",
+                })
+            } catch (error) {
+                console.log("Error: ", error);
+            }
+        }
+
+        fetchUserData();
+    }, [localData.email]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,14 +46,62 @@ function EditUser() {
     };
 
     const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        console.log(file.path);
-        setPreview(URL.createObjectURL(file));
+        setImage(e.target.files[0]);
+        setPreview(URL.createObjectURL(e.target.files[0]));
     };
 
     const handleSubmit = async (e) => {
-        alert(JSON.stringify(formData));
+        e.preventDefault();
+
+        if (formData.confirmPassword !== formData.password) {
+            setError("Passwords do not match");
+            return;
+        } else {
+            setError("");
+        }
+
+        try {
+
+            let formDataToSend = {
+                name: formData.name,
+                email: formData.email,
+                password: formData.password,
+                confirmPassword: formData.confirmPassword,
+            }
+
+            let imgUrl = formData.image;
+
+            if (image) {
+                const imageDataToSend = new FormData();
+                imageDataToSend.append('image', image);
+
+                const uploadResponse = await axios.post('http://localhost:8001/upload', imageDataToSend, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                })
+
+                imgUrl = uploadResponse.data.imgUrl;
+                formDataToSend.image = imgUrl;
+            }
+
+            const upload = await axios.post('http://localhost:8000/user/edituser', formDataToSend, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            if(upload){
+                alert(upload.data.message);
+                setUserInLocalStorage(localData.email);
+                navigate('/profile');
+            }
+
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
     };
+
 
     const togglePasswordFields = () => {
         setShowPasswordFields((prev) => !prev);
@@ -47,7 +117,7 @@ function EditUser() {
                         type="text"
                         id="name"
                         name="name"
-                        value={formData.name || user.name}
+                        value={formData.name}
                         onChange={handleChange}
                         required
                     />
@@ -58,7 +128,7 @@ function EditUser() {
                         type="email"
                         id="email"
                         name="email"
-                        value={formData.email || user.email}
+                        value={localData.email}
                         onChange={handleChange}
                         required
                         disabled
@@ -78,7 +148,7 @@ function EditUser() {
                     <img
                         src={preview}
                         alt="Profile Preview"
-                        className={styles.profilePreview} 
+                        className={styles.profilePreview}
                     />
                 </div>
 
@@ -96,7 +166,7 @@ function EditUser() {
                                 type="password"
                                 id="password"
                                 name="password"
-                                value={formData.password}
+                                defaultValue={formData.password}
                                 onChange={handleChange}
                             />
                         </div>
@@ -106,10 +176,11 @@ function EditUser() {
                                 type="password"
                                 id="confirmPassword"
                                 name="confirmPassword"
-                                value={formData.confirmPassword}
+                                defaultValue={formData.confirmPassword}
                                 onChange={handleChange}
                             />
                         </div>
+                        {error && <p className={styles.errorMessage}>{error}</p>}
                     </>
                 )}
 

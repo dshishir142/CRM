@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const { use } = require('../routes/userRoute');
+const multer = require('multer');
 const prisma = new PrismaClient;
 
 exports.createUser = async (req, res) => {
@@ -100,4 +101,41 @@ exports.getUserForLogin = async (req, res) => {
             message: "Something went wrong",
         })
     }
+}
+
+
+exports.updateUser = async (req, res) => {
+    const {name, email, password} = req.body;
+
+    const updateData = {
+        name: name,
+        password: password,
+    }
+
+    if(req.body.image){
+        updateData.image = req.body.image;
+    }
+
+    try{
+
+        const dataInDb = await prisma.user.update({
+            where : {email : email},
+            data : updateData,
+        })
+
+        if (dataInDb) {
+            res.status(201).json({
+                status: "Success",
+                message: "User updated successfully",
+                data: dataInDb,
+            })
+        }
+        
+    }catch(error){
+        res.status(500).json({
+            status: "error",
+            message : "Something went wrong",
+        })
+    }
+
 }
