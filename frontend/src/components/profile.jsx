@@ -13,6 +13,9 @@ export default function Profile() {
     function handleLogout() {
 
         localStorage.removeItem("user");
+        if(localStorage.getItem('emailConfig')){
+            localStorage.removeItem('emailConfig');
+        }
         navigate("/");
     }
 

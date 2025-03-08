@@ -1,0 +1,68 @@
+.emailSetupContainer {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    position: relative;
+    margin-left: 560px; 
+    margin-top: 150px;
+}
+
+.emailSetupContainer h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.emailSetupForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.emailSetupFormGroup {
+    margin-bottom: 15px;
+}
+
+.emailSetupFormGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.emailSetupFormGroup input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    background: #2c2c3a;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; 
+}
+
+.emailSetupFormGroup input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.emailSetupForm button {
+    width: 150px; 
+    padding: 10px 20px;
+    margin-top: 15px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    align-self: center; 
+}
+
+.emailSetupForm button:hover {
+    background-color: #3578e5;
+}

@@ -10,6 +10,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import NavBar from './components/dashboardComponents/navBar';
 import UserSignin from './components/userSignin';
 import EditUser from './components/editUser';
+import AddClient from './components/addclient';
+import AddInteraction from './components/addInteraction';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -25,6 +27,8 @@ function AnimatedRoutes() {
         <Route path="/userlogin" element={<PageWrapper><UserLogin /></PageWrapper>} />
         <Route path="/usersignin" element={<PageWrapper><UserSignin /></PageWrapper>} />
         <Route path="/edituser" element={<PageWrapper><EditUser /></PageWrapper>} />
+        <Route path="/addclient" element={<PageWrapper><AddClient /></PageWrapper>} />
+        <Route path="/addinteraction" element={<PageWrapper><AddInteraction /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );

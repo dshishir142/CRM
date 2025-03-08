@@ -18,6 +18,14 @@ enum RoleName{
   ADMIN
 }
 
+enum InteractionType{
+  CALL
+  EMAIL
+  MEETING
+  CHAT
+  OTHER
+}
+
 enum Status{
   PENDING
   COMPLETED
@@ -75,11 +83,16 @@ model product{
 }
 
 model interaction{
-  interaction_id Int @id
+  interaction_id Int @id @default(autoincrement())
   client client @relation(fields: [client_id], references: [client_id])
   client_id Int
   agent user @relation(fields: [agent_id], references: [user_id])
   agent_id Int
+  interaction_type InteractionType
+  interaction_date DateTime
+  summary String
+  next_followup_date DateTime?
+  notes String?
   created_at DateTime @default(now())
 }
 

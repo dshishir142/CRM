@@ -30,3 +30,12 @@ exports.getUserInLocalStorage = async (userEmail) => {
         console.log("Error in fetching data: ", error);
     }
 }
+
+
+
+
+exports.saveEmailConfig = async (userEmail) => {
+    const { email, password, appPassword } = userEmail;
+    
+    localStorage.setItem('emailConfig', JSON.stringify({ email, password, appPassword }));
+}

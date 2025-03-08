@@ -1,6 +1,4 @@
 const { PrismaClient } = require('@prisma/client');
-const { use } = require('../routes/userRoute');
-const multer = require('multer');
 const prisma = new PrismaClient;
 
 exports.createUser = async (req, res) => {
