@@ -2,6 +2,7 @@ import NavBar from "./dashboardComponents/navBar";
 import EmailSetup from "./emailSetup";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // Add this import
 import styles from "../style/email.module.css";
 
 export default function Email() {
@@ -69,6 +70,10 @@ export default function Email() {
 
                     {loading && <p className={styles.loading}>Loading emails...</p>}
                     {error && <p className={styles.error}>{error}</p>}
+
+                    <Link to="/composeMail">
+                        <button className={styles.composeButton}>+ Compose</button>
+                    </Link>
 
                     <div className={styles.emailList}>
                         {emails.length > 0 ? (

@@ -1,38 +1,18 @@
-import './App.css';
+import { ToastContainer } from 'react-toastify';
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { AnimatePresence } from 'framer-motion';
+import NavBar from './components/dashboardComponents/navBar';
+import Home from './components/Home';
 import Clients from './components/clients';
 import Email from './components/email';
-import Home from './components/Home';
 import Interactions from './components/interactions';
 import Profile from './components/profile';
 import UserLogin from './components/userlogin';
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from 'framer-motion';
-import NavBar from './components/dashboardComponents/navBar';
 import UserSignin from './components/userSignin';
 import EditUser from './components/editUser';
 import AddClient from './components/addclient';
 import AddInteraction from './components/addInteraction';
-
-function AnimatedRoutes() {
-  const location = useLocation();
-
-  return (
-    <AnimatePresence mode='wait'>
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-        <Route path="/email" element={<PageWrapper><Email /></PageWrapper>} />
-        <Route path="/interactions" element={<PageWrapper><Interactions /></PageWrapper>} />
-        <Route path="/clients" element={<PageWrapper><Clients /></PageWrapper>} />
-        <Route path="/profile" element={<PageWrapper><Profile /></PageWrapper>} />
-        <Route path="/userlogin" element={<PageWrapper><UserLogin /></PageWrapper>} />
-        <Route path="/usersignin" element={<PageWrapper><UserSignin /></PageWrapper>} />
-        <Route path="/edituser" element={<PageWrapper><EditUser /></PageWrapper>} />
-        <Route path="/addclient" element={<PageWrapper><AddClient /></PageWrapper>} />
-        <Route path="/addinteraction" element={<PageWrapper><AddInteraction /></PageWrapper>} />
-      </Routes>
-    </AnimatePresence>
-  );
-}
+import ComposeMail from './components/composeMail';
 
 function App() {
   const location = useLocation();
@@ -41,22 +21,41 @@ function App() {
   return (
     <>
       {!hideNavOnRoutes.includes(location.pathname) && <NavBar />}
-      <AnimatedRoutes />
+      
+      <AnimatePresence mode='wait'>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Home />} />
+          <Route path="/email" element={<Email />} />
+          <Route path="/interactions" element={<Interactions />} />
+          <Route path="/clients" element={<Clients />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/userlogin" element={<UserLogin />} />
+          <Route path="/usersignin" element={<UserSignin />} />
+          <Route path="/edituser" element={<EditUser />} />
+          <Route path="/addclient" element={<AddClient />} />
+          <Route path="/addinteraction" element={<AddInteraction />} />
+          <Route path="/composeMail" element={<ComposeMail />} />
+        </Routes>
+      </AnimatePresence>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="dark"
+        toastStyle={{
+          backgroundColor: "#1e1e1e",
+          color: "white",
+          borderRadius: "10px",
+          padding: "12px",
+          fontSize: "14px",
+        }}
+      />
     </>
   );
 }
-
-const PageWrapper = ({ children }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-    >
-      {children}
-    </motion.div>
-  );
-};
 
 export default App;

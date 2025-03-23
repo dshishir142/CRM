@@ -65,3 +65,39 @@ exports.getEmails = async (req, res) => {
 };
 
 
+
+exports.sendEmail = async (req, res) => {
+    const { user, to, subject, text, pass } = req.body;
+    
+    try{
+        let transporter = nodemailer.createTransport({
+            service : "gmail",
+            auth: {
+                user : user,
+                pass : pass,
+            },
+        });
+
+        let mailOptions = {
+            from: user,
+            to: to,
+            subject: subject,
+            text: text,
+        }
+
+        let info = await transporter.sendMail(mailOptions)
+
+        res.status(201).json({
+            status: "success",
+            message: "Mail sent successfully",
+            data: info,
+        })
+
+    }catch(error){
+        console.log(error);
+        res.status(500).json({
+            status : 'error',
+            message: "Failed to send mail",
+        })
+    }
+}

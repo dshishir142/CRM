@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "../style/userSignin.module.css";
+import styles from "../style/editUser.module.css";
 import { useNavigate } from "react-router-dom";
 import { getUserInLocalStorage, setUserInLocalStorage } from "./localStorageUtils";
 import axios from 'axios';
