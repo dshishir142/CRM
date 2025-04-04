@@ -1,4 +1,5 @@
 import { ToastContainer } from 'react-toastify';
+import { WebSocketClient, closeWebSocket } from './components/webSocketUtils';
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from 'framer-motion';
 import NavBar from './components/dashboardComponents/navBar';
@@ -13,8 +14,20 @@ import EditUser from './components/editUser';
 import AddClient from './components/addclient';
 import AddInteraction from './components/addInteraction';
 import ComposeMail from './components/composeMail';
+import { useEffect } from 'react';
 
 function App() {
+
+  useEffect(() => {
+    const user_id = "user";
+    WebSocketClient(user_id);
+
+    return () => {
+      closeWebSocket();
+    }
+  }, []);
+
+
   const location = useLocation();
   const hideNavOnRoutes = ["/userlogin", "/usersignin", "/edituser"]; 
 

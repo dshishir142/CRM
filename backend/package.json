@@ -16,6 +16,7 @@
     "imap-simple": "^5.1.0",
     "mailparser": "^3.7.2",
     "nodemailer": "^6.10.0",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "ws": "^8.18.1"
   }
 }
