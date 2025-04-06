@@ -19,7 +19,8 @@ import { useEffect } from 'react';
 function App() {
 
   useEffect(() => {
-    const user_id = "user";
+    const localData = JSON.parse(localStorage.getItem('user'));
+    const user_id = localData.user_id;
     WebSocketClient(user_id);
 
     return () => {

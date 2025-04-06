@@ -9,13 +9,13 @@ export const WebSocketClient = ( user_id) => {
 
         socket.onopen = () => {
             console.log("Websocket connected");
+            socket.send(JSON.stringify({ type: "register", agent_id: user_id }));
         }
 
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data)
 
             if(data.type === 'notification'){
-                console.log("It is notification");
                 toast(data.message, {
                     position: "top-right",
                     autoClose: false,

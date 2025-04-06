@@ -7,28 +7,35 @@ const userRoute = require('./routes/userRoute.js');
 const clientRoute = require('./routes/clientRoute.js');
 const interactionRoute = require('./routes/interactionRoute.js');
 const mailRoute = require('./routes/mailRoute.js');
+const { scheduleNotifications } = require('./controllers/notificationController.js');
 
-const server = http.createServer(app)
+const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (ws) => {
     console.log("A new client connected");
 
+    ws.on('message', (message) => {
+        try {
+            const data = JSON.parse(message);
+
+            if (data.type === "register" && data.agent_id) {
+                console.log(`Agent ${data.agent_id} registered for notifications`);
+                scheduleNotifications(data.agent_id, ws);
+            }
+        } catch (error) {
+            console.error("Error parsing message:", error);
+        }
+    });
+
     ws.on('close', () => {
         console.log('A client disconnected');
-    })
+    });
 
-    ws.on('message', (message) => {
-        console.log(`There is a new message ${message}`);
-    })
-
-    ws.send(JSON.stringify({ type : 'notification', message : "Welcome to the server"}));
-})
-
-
+    ws.send(JSON.stringify({ type: 'notification', message: "Welcome! Notifications will be sent here." }));
+});
 
 const PORT = 8000;
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
@@ -39,9 +46,5 @@ app.use('/interaction', interactionRoute);
 app.use('/mail', mailRoute);
 
 server.listen(PORT, () => {
-    console.log(`Listening to port ${PORT}`);
-})
-
-wss.on('listening', ()=>{
-    console.log("WebSocket server is listening to port 8000");
-})
+    console.log(`Listening on port ${PORT}`);
+});

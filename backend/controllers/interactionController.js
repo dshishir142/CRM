@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const { scheduleJob } = require('../controllers/notificationController');
 
 exports.createInteraction = async (req, res) => {
     
