@@ -8,6 +8,7 @@ const clientRoute = require('./routes/clientRoute.js');
 const interactionRoute = require('./routes/interactionRoute.js');
 const mailRoute = require('./routes/mailRoute.js');
 const { scheduleNotifications } = require('./controllers/notificationController.js');
+const { registerAgent, unregisterAgent } = require('./wsManager.js');
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
@@ -20,6 +21,7 @@ wss.on('connection', (ws) => {
             const data = JSON.parse(message);
 
             if (data.type === "register" && data.agent_id) {
+                registerAgent(data.agent_id, ws);
                 console.log(`Agent ${data.agent_id} registered for notifications`);
                 scheduleNotifications(data.agent_id, ws);
             }
@@ -29,6 +31,7 @@ wss.on('connection', (ws) => {
     });
 
     ws.on('close', () => {
+        unregisterAgent(ws);
         console.log('A client disconnected');
     });
 

@@ -16,6 +16,8 @@ export default function EmailSetup() {
     const handleSave = () => {
         saveEmailConfig({ email, password, appPassword });
         setIsSaved(true); 
+        alert("Email saved");
+        window.location.reload();
     };
 
     useEffect(() => {

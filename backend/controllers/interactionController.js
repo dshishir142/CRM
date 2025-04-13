@@ -1,6 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const { scheduleJob } = require('../controllers/notificationController');
+const { getWebSocketForAgent } = require('../wsManager');
 
 exports.createInteraction = async (req, res) => {
     
@@ -27,6 +28,13 @@ exports.createInteraction = async (req, res) => {
                 agent: true
             }
         });
+
+        if(dataInDb.next_followup_date){
+            const ws = getWebSocketForAgent(agent_id);
+            if(ws){
+                scheduleJob(dataInDb.next_followup_date, dataInDb.interaction_id, dataInDb.agent_id, ws, dataInDb.client.name);
+            }
+        }
 
         res.status(201).json({
             status: "success",

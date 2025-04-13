@@ -36,4 +36,4 @@ function sendNotification(ws, message) {
     }
 }
 
-module.exports = { scheduleNotifications };
+module.exports = { scheduleNotifications, scheduleJob };
