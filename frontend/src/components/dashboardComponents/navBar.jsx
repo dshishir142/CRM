@@ -31,6 +31,11 @@ export default function NavBar() {
             <img src="/image/profile.png" alt="Profile" className={styles.profileIcon} />Profile
           </Link>
         </li>
+        <li>
+          <Link to="/enrichment" className={styles.navItem}>
+            <img src="/image/enrichment.png" alt="enrichment" className={styles.profileIcon} />Enrichment
+          </Link>
+        </li>
       </ul>
     </nav>
   );

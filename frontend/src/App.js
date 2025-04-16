@@ -15,6 +15,7 @@ import AddClient from './components/addclient';
 import AddInteraction from './components/addInteraction';
 import ComposeMail from './components/composeMail';
 import { useEffect } from 'react';
+import Enrichment from './components/enrichment';
 
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
           <Route path="/addclient" element={<AddClient />} />
           <Route path="/addinteraction" element={<AddInteraction />} />
           <Route path="/composeMail" element={<ComposeMail />} />
+          <Route path="/enrichment" element={<Enrichment />} />
         </Routes>
       </AnimatePresence>
 
