@@ -6,8 +6,10 @@ import axios from "axios";
 export default function ComposeMail() {
 
     const localData = JSON.parse(localStorage.getItem('emailConfig'));
+    const userData = JSON.parse(localStorage.getItem('user'));
 
     const [emailData, setEmailData] = useState({
+        user_id: userData.user_id,
         user: localData.email, 
         to: "", 
         subject: "",

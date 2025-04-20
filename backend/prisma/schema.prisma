@@ -107,13 +107,14 @@ model history{
 
 model email{
   email_id Int @id @default(autoincrement())
-  client client @relation(fields: [client_id], references: [client_id])
-  client_id Int
+  client client? @relation(fields: [client_id], references: [client_id])
+  client_id Int?
   agent user @relation(fields: [user_id], references: [user_id])
   user_id Int
+  to String
   subject String
   body String
-  status String
+  status Status
   created_at DateTime @default(now())
 }
 

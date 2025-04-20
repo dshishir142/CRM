@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 const nodemailer = require('nodemailer');
 const imaps = require('imap-simple');
 const { simpleParser } = require('mailparser');
+const { body } = require('framer-motion/client');
 
 exports.getEmails = async (req, res) => {
     const { email, appPassword } = req.query;
@@ -67,7 +68,7 @@ exports.getEmails = async (req, res) => {
 
 
 exports.sendEmail = async (req, res) => {
-    const { user, to, subject, text, pass } = req.body;
+    const { user, to, subject, text, pass, user_id } = req.body;
     
     try{
         let transporter = nodemailer.createTransport({
@@ -87,10 +88,32 @@ exports.sendEmail = async (req, res) => {
 
         let info = await transporter.sendMail(mailOptions)
 
+        const findClient = await prisma.client.findUnique({
+            where: {
+                email: to,
+            }
+        })
+
+        let client_id = null;
+        if(findClient){
+            clientId = findClient.client_id
+        }
+
+        const dataInDb = await prisma.email.create({
+            data: {
+                to:to,
+                user_id: user_id,
+                subject: subject,
+                body: text,
+                status: 'PENDING',
+                client_id: clientId || null,
+            }
+        })
+
         res.status(201).json({
             status: "success",
             message: "Mail sent successfully",
-            data: info,
+            data: dataInDb,
         })
 
     }catch(error){
