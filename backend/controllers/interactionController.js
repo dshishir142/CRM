@@ -88,3 +88,59 @@ exports.getInteractionsByAgentId = async (req, res) => {
         });
     } 
 }
+
+
+
+exports.getAllInteraction = async (req, res) => {
+    try{
+
+        const dataInDb = await prisma.interaction.findMany({
+            include: {
+                client: true,
+                agent: true,
+            }
+        })
+
+        if (dataInDb) {
+            res.status(201).json({
+                status: "Success",
+                message: "Interaction data fetched successfully",
+                data: dataInDb,
+            })
+        }
+        
+    }catch(error){
+        res.status(500).json({
+            status: "error",
+            message : "Something went wrong",
+        })
+    }
+}
+
+
+
+exports.deleteInteraction = async (req, res) => {
+    const id = parseInt(req.params.id);
+    try{
+
+        const dataInDb = await prisma.interaction.delete({
+            where : {
+                interaction_id: id,
+            }
+        })
+
+        if (dataInDb) {
+            res.status(201).json({
+                status: "Success",
+                message: "Interaction deleted successfully",
+                data: dataInDb,
+            })
+        }
+        
+    }catch(error){
+        res.status(500).json({
+            status: "error",
+            message : "Something went wrong",
+        })
+    }
+}
