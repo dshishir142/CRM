@@ -16,8 +16,10 @@ exports.createUser = async (req, res) => {
             })
         }
 
+        const { name, role_id, password } = req.body
+
         const dataInDb = await prisma.user.create({
-            data: { ...req.body, role_id: 1},
+            data: { ...req.body, role_id: role_id || 1},
         })
 
         if (dataInDb) {
@@ -136,4 +138,55 @@ exports.updateUser = async (req, res) => {
         })
     }
 
+}
+
+
+
+
+exports.getAllUser = async (req, res) =>{
+    try{
+
+        const dataInDb = await prisma.user.findMany()
+
+        if (dataInDb) {
+            res.status(201).json({
+                status: "Success",
+                message: "User data fetched successfully",
+                data: dataInDb,
+            })
+        }
+        
+    }catch(error){
+        res.status(500).json({
+            status: "error",
+            message : "Something went wrong",
+        })
+    }
+}
+
+
+exports.deleteUser = async (req, res) => {
+    const id = parseInt(req.params.id);
+    try{
+
+        const dataInDb = await prisma.user.delete({
+            where : {
+                user_id: id,
+            }
+        })
+
+        if (dataInDb) {
+            res.status(201).json({
+                status: "Success",
+                message: "User deleted successfully",
+                data: dataInDb,
+            })
+        }
+        
+    }catch(error){
+        res.status(500).json({
+            status: "error",
+            message : "Something went wrong",
+        })
+    }
 }
