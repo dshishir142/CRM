@@ -6,6 +6,7 @@ import UsersPage from './components/users';
 import AddUser from './components/addUser';
 import EditUser from './components/editUser';
 import Interaction from './components/interactions';
+import Email from './components/email';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/adduser" element={<AddUser />} />
           <Route path="/edituser" element={<EditUser />} />
           <Route path="/interactions" element={<Interaction />} />
+          <Route path="/email" element={<Email />} />
         </Routes>
     </>
   );

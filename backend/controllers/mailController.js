@@ -124,3 +124,29 @@ exports.sendEmail = async (req, res) => {
         })
     }
 }
+
+
+exports.getAllEmails = async (req, res) => {
+    try {
+        const emails = await prisma.email.findMany({
+            include: {
+                agent: true,
+                client: true,
+            },
+            orderBy: {
+                created_at: 'desc',
+            },
+        });
+
+        res.status(200).json({
+            status: 'success',
+            data: emails,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            message: 'Failed to fetch emails',
+        });
+    }
+}
