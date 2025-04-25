@@ -190,3 +190,51 @@ exports.deleteUser = async (req, res) => {
         })
     }
 }
+
+
+
+exports.getAdminForLogin = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+      
+        let adminData;
+        try {
+          adminData = await prisma.user.findFirst({
+            where: {
+              AND: [
+                { email },
+                { password },
+                { role_id: 2 }
+              ]
+            }
+          });
+        } catch (prismaError) {
+          console.error("Prisma error:", prismaError);
+          return res.status(500).json({
+            status: "error",
+            message: "Database query failed",
+          });
+        }
+      
+      
+        if (adminData) {
+          return res.status(200).json({
+            status: "success",
+            message: "login successful",
+            data: adminData,
+          });
+        } else {
+          return res.status(401).json({
+            status: "fail",
+            message: "Invalid credentials",
+          });
+        }
+      } catch (error) {
+        console.error("Login error:", error);
+        return res.status(500).json({
+          status: "error",
+          message: "Something went wrong",
+        });
+      } 
+   
+}

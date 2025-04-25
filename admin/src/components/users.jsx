@@ -13,7 +13,7 @@ export default function UsersPage() {
 
   const fetchUsers = () => {
     axios
-      .get("http://localhost:8000/user/", {
+      .get("http://localhost:8000/user", {
         headers: { "Content-Type": "application/json" },
       })
       .then((res) => {

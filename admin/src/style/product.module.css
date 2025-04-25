@@ -1,0 +1,156 @@
+.container {
+    margin-left: 200px;
+    padding: 40px;
+    background-color: #1e1e1e;
+    min-height: 100vh;
+    color: #ffffff;
+    box-sizing: border-box;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  
+  .header h2 {
+    font-size: 28px;
+    border-bottom: 2px solid #444;
+    padding-bottom: 10px;
+  }
+  
+  .addBtn {
+    background-color: #2196f3;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  
+  .addBtn:hover {
+    background-color: #1976d2;
+  }
+  
+  .searchBar {
+    width: 98%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    font-size: 16px;
+  }
+  
+  .searchBar::placeholder {
+    color: #bbb;
+  }
+  
+  .table {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .tableRow {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    background-color: #2c2c2c;
+    padding: 14px;
+    border-radius: 8px;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border: 1px solid #333;
+  }
+  
+  .tableRow:hover {
+    background-color: #3a3a3a;
+  }
+  
+  .tableHeader {
+    background-color: #3d3d5c;
+    font-weight: bold;
+    cursor: default;
+  }
+  
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 200px;
+    width: calc(100% - 200px);
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .modalOverlay.active {
+    display: flex;
+  }
+  
+  .modal {
+    background-color: #2a2a2a;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    color: #fff;
+    position: relative;
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ccc;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  
+  .closeButton:hover {
+    background: #999;
+  }
+  
+  .modal h3 {
+    margin-top: 0;
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+  
+  .modal p {
+    margin: 8px 0;
+    font-size: 15px;
+  }
+  
+  .descriptionBox {
+    background-color: #1e1e1e;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    font-size: 14px;
+    margin-top: 6px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+  
+  .clientList {
+    margin-top: 10px;
+    padding-left: 20px;
+    list-style: disc;
+  }
+  
+  .clientList li {
+    margin: 5px 0;
+    font-size: 15px;
+  }
+  
