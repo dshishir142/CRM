@@ -131,7 +131,7 @@ model task{
 }
 
 model client_product{
-  client_product_id Int @id
+  client_product_id Int @id @default(autoincrement())
   client client @relation(fields: [client_id], references: [client_id])
   client_id Int
   product product @relation(fields: [product_id], references: [product_id])

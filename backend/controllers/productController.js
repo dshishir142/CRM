@@ -17,3 +17,32 @@ exports.getAllProducts = async (req, res) => {
     }
 
 }
+
+exports.addProduct = async (req, res) => {
+    const { name, description, price, status, user_id } = req.body;
+    try{
+        const newProduct = await prisma.product.create({
+            data: {
+                name: name,
+                description: description,
+                price: price,
+                status: status,
+                admin_id: user_id,
+            }
+        })
+
+        if(newProduct) {
+            res.status(201).json({
+                status: "success",
+                message: "Product created successfully",
+                data: newProduct,
+            });
+        }
+    }catch (error) {
+        res.status(500).json({
+            status: "failed",
+            message: "Error creating product",
+            error: error.message,
+        });
+    }
+}

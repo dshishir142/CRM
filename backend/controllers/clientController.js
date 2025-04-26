@@ -2,6 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 exports.addClient = async (req, res) => {
+
     try {
         const { email } = req.body;
 
@@ -30,6 +31,18 @@ exports.addClient = async (req, res) => {
                 }
             },
         });
+
+
+        if(dataInDb){
+
+            const clientProduct = await prisma.client_product.create({
+                data: {
+                    client_id: dataInDb.client_id,
+                    product_id: parseInt(req.body.product_id),
+                    interest: req.body.interest_score,
+                }
+            })
+        }
 
         return res.status(201).json({
             status: "success",
@@ -99,6 +112,35 @@ exports.changeInterestScore = async (req, res) => {
             data: dataInDb,
         })
 
+    }catch(error){
+        console.log(`Something went wrong: ${error}`);
+    }
+}
+
+
+
+
+exports.getClientProduct = async (req, res) => {
+    try{
+        const agent_id = parseInt(req.params.agent);
+        
+        const dataInDb = await prisma.client_product.findMany({
+            where: {
+                client: {
+                    user_id : agent_id,
+                }
+            },
+            include: {
+                client: true,
+                product: true,
+            }
+        })
+
+        res.status(201).json({
+            status: "success",
+            message: "Client data fetched successfully",
+            data: dataInDb,
+        })
     }catch(error){
         console.log(`Something went wrong: ${error}`);
     }

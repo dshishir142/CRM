@@ -96,7 +96,7 @@ exports.sendEmail = async (req, res) => {
 
         let client_id = null;
         if(findClient){
-            clientId = findClient.client_id
+            client_id = findClient.client_id
         }
 
         const dataInDb = await prisma.email.create({
@@ -106,7 +106,7 @@ exports.sendEmail = async (req, res) => {
                 subject: subject,
                 body: text,
                 status: 'PENDING',
-                client_id: clientId || null,
+                client_id: client_id || null,
             }
         })
 
