@@ -13,7 +13,7 @@ function EditUser() {
 
     const [showPasswordFields, setShowPasswordFields] = useState(false);
     const [formData, setFormData] = useState({
-        name: "",
+        name: passed_user.name,
         email: passed_user.email,
         image: "",
         password: "",

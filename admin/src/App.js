@@ -10,7 +10,10 @@ import EditUser from './components/editUser';
 import Interaction from './components/interactions';
 import Email from './components/email';
 import Product from './components/product';
+import AddProduct from './components/addProduct';
 import { AuthContext } from './authContext.js';
+import Clients from './components/clients.jsx';
+import EditClient from './components/editClient.jsx';
 
 const ProtectedRoute = ({ component: Component }) => {
   const { admin } = React.useContext(AuthContext);
@@ -40,6 +43,9 @@ function App() {
         <Route path="/interactions" element={<ProtectedRoute component={Interaction} />} />
         <Route path="/email" element={<ProtectedRoute component={Email} />} />
         <Route path="/product" element={<ProtectedRoute component={Product} />} />
+        <Route path="/addproduct" element={<ProtectedRoute component={AddProduct} />} />
+        <Route path="/clients" element={<ProtectedRoute component={Clients} />} />
+        <Route path="/editclient/:id" element={<ProtectedRoute component={EditClient} />} />
       </Routes>
     </>
   );

@@ -21,8 +21,10 @@ function App() {
 
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('user'));
-    const user_id = localData.user_id;
-    WebSocketClient(user_id);
+    if(localData){
+      const user_id = localData.user_id;
+      WebSocketClient(user_id);
+    }
 
     return () => {
       closeWebSocket();

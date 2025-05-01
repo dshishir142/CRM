@@ -80,6 +80,7 @@ model product{
   admin_id Int
   created_at DateTime @default(now())
   clients client_product[]
+  histories history[]
 }
 
 model interaction{
@@ -100,6 +101,8 @@ model history{
   history_id Int @id @default(autoincrement())
   client client @relation(fields: [client_id], references: [client_id])
   client_id Int
+  product product @relation(fields: [product_id], references: [product_id])
+  product_id Int
   score Int
   reason String
   created_at DateTime @default(now())
