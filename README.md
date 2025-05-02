@@ -10,7 +10,7 @@ A modern, dark-themed Customer Relationship Management (CRM) system built for ag
 
 - 📧 Email Module – Send and review client emails.
 
-- 📊 Interest Scoring – Auto-assess client engagement (read-only field).
+- 📊 Interest Scoring – Assess client engagement with score.
 
 - 🔔 Smart Notifications – Scheduled follow-up reminders via WebSockets.
 
@@ -116,3 +116,13 @@ Integrations:
     cd ../imageLoader
     npm start
     ```
+
+    
+🖼️ Image Hosting
+
+Client profile pictures are uploaded via the imageLoader server and saved in public/image. The server returns a public image URL like:
+
+   
+    http://localhost:8001/image/filename.jpg
+   
+Only the filename is stored in the database.
