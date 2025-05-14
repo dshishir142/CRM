@@ -9,6 +9,7 @@ const interactionRoute = require('./routes/interactionRoute.js');
 const mailRoute = require('./routes/mailRoute.js');
 const enrichmentRoute = require('./routes/enrichmentRoute.js');
 const productRoute = require('./routes/productRoute.js');
+const dataRoute = require('./routes/dataRoute.js');
 const { scheduleNotifications } = require('./controllers/notificationController.js');
 const { registerAgent, unregisterAgent } = require('./wsManager.js');
 
@@ -51,6 +52,7 @@ app.use('/interaction', interactionRoute);
 app.use('/mail', mailRoute);
 app.use('/enrich', enrichmentRoute);
 app.use('/product', productRoute);
+app.use('/data', dataRoute);
 
 server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
