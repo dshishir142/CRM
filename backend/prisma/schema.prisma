@@ -66,7 +66,6 @@ model client{
   interactions interaction[]
   histories history[]
   emails email[]
-  tasks task[]
   products client_product[]
 }
 
@@ -123,8 +122,6 @@ model email{
 
 model task{
   task_id Int @id @default(autoincrement())
-  client client @relation(fields: [client_id], references: [client_id])
-  client_id Int
   agent user @relation(fields: [user_id], references: [user_id])
   user_id Int
   description String

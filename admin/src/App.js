@@ -14,6 +14,7 @@ import AddProduct from './components/addProduct';
 import { AuthContext } from './authContext.js';
 import Clients from './components/clients.jsx';
 import EditClient from './components/editClient.jsx';
+import AssignTask from './components/assignTask.jsx';
 
 const ProtectedRoute = ({ component: Component }) => {
   const { admin } = React.useContext(AuthContext);
@@ -45,6 +46,7 @@ function App() {
         <Route path="/product" element={<ProtectedRoute component={Product} />} />
         <Route path="/addproduct" element={<ProtectedRoute component={AddProduct} />} />
         <Route path="/clients" element={<ProtectedRoute component={Clients} />} />
+        <Route path="/assigntask" element={<ProtectedRoute component={AssignTask} />} />
         <Route path="/editclient/:id" element={<ProtectedRoute component={EditClient} />} />
       </Routes>
     </>
