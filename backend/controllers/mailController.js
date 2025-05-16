@@ -69,61 +69,69 @@ exports.getEmails = async (req, res) => {
 
 exports.sendEmail = async (req, res) => {
     const { user, to, subject, text, pass, user_id } = req.body;
-    
-    try{
+
+    try {
         let transporter = nodemailer.createTransport({
-            service : "gmail",
+            service: "gmail",
             auth: {
-                user : user,
-                pass : pass,
+                user: user,
+                pass: pass,
             },
         });
+
+        const pixelUrl = `http://localhost:8002/pixel/${encodeURIComponent(to)}`;
+
+        const htmlBody = `
+            <p>${text.replace(/\n/g, '<br>')}</p>
+            <img src="${pixelUrl}" width="1" height="1" style="display:none" alt=""/>
+        `;
 
         let mailOptions = {
             from: user,
             to: to,
             subject: subject,
+            html: htmlBody,
             text: text,
-        }
+        };
 
-        let info = await transporter.sendMail(mailOptions)
+        let info = await transporter.sendMail(mailOptions);
 
         const findClient = await prisma.client.findUnique({
             where: {
                 email: to,
             }
-        })
+        });
 
         let client_id = null;
-        if(findClient){
-            client_id = findClient.client_id
+        if (findClient) {
+            client_id = findClient.client_id;
         }
 
         const dataInDb = await prisma.email.create({
             data: {
-                to:to,
+                to: to,
                 user_id: user_id,
                 subject: subject,
                 body: text,
                 status: 'PENDING',
                 client_id: client_id || null,
             }
-        })
+        });
 
         res.status(201).json({
             status: "success",
             message: "Mail sent successfully",
             data: dataInDb,
-        })
+        });
 
-    }catch(error){
+    } catch (error) {
         console.log(error);
         res.status(500).json({
-            status : 'error',
+            status: 'error',
             message: "Failed to send mail",
-        })
+        });
     }
-}
+};
 
 
 exports.getAllEmails = async (req, res) => {

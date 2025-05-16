@@ -20,9 +20,16 @@ const Home = () => {
     const [productData, setProductData] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [followups, setFollowups] = useState([]);
+    const [notLoggedIn, setNotLoggedIn] = useState(false); // ✅ New state for login check
 
     useEffect(() => {
         const localData = JSON.parse(localStorage.getItem('user'));
+
+        if (!localData || !localData.user_id) {
+            setNotLoggedIn(true); // ✅ Show login message if no user data
+            return;
+        }
+
         const agentId = localData.user_id;
 
         fetch(`http://localhost:8000/data/${agentId}`)
@@ -222,6 +229,15 @@ const Home = () => {
             </div>
         ));
     };
+
+    // ✅ If not logged in, return early
+    if (notLoggedIn) {
+        return (
+            <div className={styles.container}>
+                <h2 style={{ color: 'white' }}>Please log in to view your dashboard.</h2>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.container}>
