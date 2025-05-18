@@ -35,6 +35,7 @@ const Enrichment = () => {
       const data = await res.json();
       
       if (data.status === 'success') {
+        console.log(data);
         setResult(data);
         setError('');
       } else {
@@ -81,22 +82,30 @@ const Enrichment = () => {
         );
         
       case 'domain':
-        return (
-          result.emails && (
-            <div className={style.resultBox}>
-              <h3>Emails Found in Domain</h3>
-              {result.emails.length > 0 ? (
-                <ul>
-                  {result.emails.map((email, index) => (
-                    <li key={index}>{email}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No emails found for this domain.</p>
-              )}
-            </div>
-          )
-        );
+  return (
+    result.emails && (
+      <div className={style.resultBox}>
+        <h3>Emails Found in Domain</h3>
+        {result.emails.length > 0 ? (
+          <ul>
+            {result.emails.map((email, index) => (
+              <li key={index}>
+                <p><strong>Email:</strong> {email.value}</p>
+                <p><strong>Type:</strong> {email.type}</p>
+                <p><strong>Confidence:</strong> {email.confidence}%</p>
+                {email.first_name && <p><strong>Name:</strong> {email.first_name} {email.last_name || ''}</p>}
+                {email.position && <p><strong>Position:</strong> {email.position}</p>}
+                <hr />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No emails found for this domain.</p>
+        )}
+      </div>
+    )
+  );
+
         
       case 'verify':
         return (
